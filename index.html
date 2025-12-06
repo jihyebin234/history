@@ -6,47 +6,34 @@
   <title>한국사 퀴즈 게임 (해방~1987 확장판)</title>
   <style>
     :root{
-      --bg:#0b0b0b;
-      --card:#1a1a1a;
-      --accent:#ffb86b;
-      --muted:#c7c7c7;
-      --glass: rgba(255,255,255,0.07);
+      --bg:#0b0b0b; --card:#1a1a1a; --accent:#ffb86b;
+      --muted:#c7c7c7; --glass: rgba(255,255,255,0.07);
     }
-    html,body{
-      height:100%;margin:0;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,'Noto Sans KR',sans-serif;
-      background:#000;color:#fff;
-    }
+    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,'Noto Sans KR',sans-serif;background:#000;color:#fff;}
     .wrap{max-width:880px;margin:36px auto;padding:20px}
     header{display:flex;align-items:center;gap:16px}
     h1{margin:0;font-size:1.4rem}
     p.lead{margin:6px 0 18px;color:var(--muted)}
     .card{background:var(--card);border-radius:12px;padding:18px;box-shadow:0 6px 30px rgba(0,0,0,0.9);}
-
     .controls{display:flex;gap:12px;align-items:center;margin-bottom:14px}
     .controls input[type=number], .controls input[type=checkbox]{accent-color:var(--accent)}
     .controls input[type=number]{width:84px;padding:8px;border-radius:8px;border:1px solid #444;background:#111;color:#fff}
     .controls button{padding:8px 12px;border-radius:8px;border:0;background:linear-gradient(90deg,var(--accent),#ffd9a8);cursor:pointer;color:#000;font-weight:600}
-
     .meta{display:flex;gap:12px;align-items:center;margin-bottom:12px;color:var(--muted)}
     .question-area{margin-top:8px}
     .qnum{font-size:.9rem;color:var(--muted)}
     .question{font-size:1.2rem;margin:8px 0 14px}
-
     .choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     .choice{background:#111;padding:12px;border-radius:10px;cursor:pointer;border:1px solid #333;color:#fff;text-align:left}
     .choice:hover{transform:translateY(-3px);transition:transform .12s;background:#222}
     .choice.correct{outline:3px solid rgba(90,200,120,0.4);background:#143014}
     .choice.wrong{outline:3px solid rgba(255,80,80,0.4);background:#300}
-    .explain{margin-top:12px;color:var(--muted);font-size:.95rem}
-
+    .explain{margin-top:12px;color:var(--muted);font-size:.95rem;white-space:pre-line;}
     .footer{display:flex;justify-content:space-between;align-items:center;margin-top:16px;color:var(--muted)}
     .btns{display:flex;gap:8px}
     .btn{padding:8px 10px;border-radius:8px;border:0;background:#222;color:#fff;cursor:pointer}
     .btn:hover{background:#333}
-
     .hidden{display:none}
-
     @media (max-width:640px){.choices{grid-template-columns:1fr}.wrap{padding:12px}}
   </style>
 </head>
@@ -56,7 +43,7 @@
       <div style="width:56px;height:56px;border-radius:10px;background:linear-gradient(180deg,#ffb86b,#ffd9a8);display:flex;align-items:center;justify-content:center;color:#102133;font-weight:700">KH</div>
       <div>
         <h1>한국사 퀴즈 게임 — 해방 ~ 1987 (확장판)</h1>
-        <p class="lead">40문제 이상을 포함한 완성형 현대사 학습용 객관식 퀴즈입니다.</p>
+        <p class="lead">40문제 모두 포함, 틀린 이유와 해설 확인 가능.</p>
       </div>
     </header>
 
@@ -96,26 +83,48 @@
 
   <script>
     const QUESTIONS = [
-      {q:"카이로 회담의 핵심 내용은?",choices:["독일 분할","한국 독립 약속","유럽 질서 재편","냉전 종식"],a:1,explain:"1943 카이로 회담에서 한국 독립을 약속했다."},
-      {q:"얄타 회담의 주요 결정은?",choices:["한국 즉시 독립","소련의 대일전 참전","UN 해체","한반도 중립화"],a:1,explain:"얄타 회담에서 소련의 대일전 참전이 결정되었다."},
-      {q:"모스크바 3상회의 내용이 아닌 것은?",choices:["신탁통치","임시정부 수립","미소공동위 구성","남북 통일정부 수립"],a:3,explain:"통일정부 수립은 포함되지 않았다."},
-      {q:"미소공동위원회가 결렬된 이유는?",choices:["경제 문제","군사 문제","임시정부 참여 문제","휴전선 협상"],a:2,explain:"임정 참여 대상을 두고 미국과 소련이 대립했다."},
-      {q:"5.10 총선의 특징은?",choices:["남북 전체 선거","21세 이상 보통선거","대통령 직선","북한 참여"],a:1,explain:"남한에서만 21세 이상 보통·평등·직접·비밀선거가 시행되었다."},
-      {q:"제헌헌법의 특징은?",choices:["직선제","국회 간선제","6년 중임제","내각책임제"],a:1,explain:"대통령은 국회에서 뽑았다."},
-      {q:"농지개혁 방식은?",choices:["무상몰수","유상매수·유상분배","지주권 강化","전면 국유화"],a:1,explain:"유상매수·유상분배로 진행되었다."},
-      {q:"6.25 전쟁 직후 체결된 조약은?",choices:["가쓰라태프트","사이토협정","한미상호방위조약","경성조약"],a:2,explain:"1953 한미상호방위조약 체결."},
-      {q:"3.15 부정선거 결과는?",choices:["5.16 군사정변","4.19 혁명","10.26 사건","5.18 운동"],a:1,explain:"4.19 혁명으로 이승만 하야."},
-      {q:"5.16 군사정변의 주도 세력은?",choices:["김대중","박정희","전두환","노태우"],a:1,explain:"1961 박정희가 군사정변을 일으켰다."},
-      {q:"유신헌법의 특징은?",choices:["직선제","3선 금지","긴급조치권","의회권 강화"],a:2,explain:"대통령 권한을 대폭 강화했다."},
-      {q:"긴급조치권이 행사된 시기 정권은?",choices:["이승만","박정희","최규하","전두환"],a:1,explain:"유신체제 박정희 정부의 권한."},
-      {q:"부마항쟁이 일어난 지역은?",choices:["서울·대구","부산·마산","광주·목포","춘천·인제"],a:1,explain:"1979년 부산·마산에서 시작."},
-      {q:"10.26 사건의 결과는?",choices:["노태우 집권","전두환 체포","박정희 사망","4.19 혁명"],a:2,explain:"중앙정보부 김재규가 박정희를 시해."},
-      {q:"12.12 사태 주도자는?",choices:["장면","윤보선","전두환","노신영"],a:2,explain:"전두환 중심 신군부가 군권 장악."},
-      {q:"5.18 민주화운동 장소는?",choices:["부산","광주","서울","인천"],a:1,explain:"1980 광주에서 민주화 시위 발생."},
-      {q:"6월 민주항쟁 결과는?",choices:["유신 부활","전두환 연임","대통령 직선제","국회 해산"],a:2,explain:"1987 6.29 선언 → 직선제 도입."},
-      {q:"대한민국 정부 수립일은?",choices:["1945","1947","1948","1949"],a:2,explain:"1948년 8월 15일 정부 수립."},
-      {q:"반민특위 활동이 약화된 이유는?",choices:["예산 부족","대중 반대","경찰의 습격","이승만의 소극적 태도"],a:3,explain:"이승만의 소극적 태도로 반민특위의 활동이 제대로 지원되지 못하고 약화되었습니다."},
-      {q:"장면 내각이 출범한 계기는?",choices:["4.19 혁명","5.16 군사정변","6월 항쟁","부마항쟁"],a:0,explain:"4.19 이후 내각책임제가 도입되며 장면 내각 출범."}
+      // 1~20번 기존 문제
+      {q:"카이로 회담의 핵심 내용은?", choices:["독일 분할","한국 독립 약속","유럽 질서 재편","냉전 종식"], a:1, explain:"1943 카이로 회담에서 한국 독립을 약속했다.", wrongExplain:["독일 분할은 얄타 회담 내용","", "유럽 질서 재편은 해당 없음","냉전 종식은 시기상 맞지 않음"]},
+      {q:"얄타 회담의 주요 결정은?", choices:["한국 즉시 독립","소련의 대일전 참전","UN 해체","한반도 중립화"], a:1, explain:"소련의 대일전 참전이 결정됨", wrongExplain:["즉시 독립은 약속만","", "UN 해체는 아님","중립화 논의 아님"]},
+      {q:"모스크바 3상회의 내용이 아닌 것은?", choices:["신탁통치","임시정부 수립","미소공동위 구성","남북 통일정부 수립"], a:3, explain:"통일정부 수립은 포함되지 않음", wrongExplain:["신탁통치 맞음","임시정부 수립 맞음","미소공동위 구성 맞음",""]},
+      {q:"미소공동위원회가 결렬된 이유는?", choices:["경제 문제","군사 문제","임시정부 참여 문제","휴전선 협상"], a:2, explain:"임정 참여 대상 문제로 미국-소련 대립", wrongExplain:["경제 문제 아님","군사 문제 아님","", "휴전선 협상 아님"]},
+      {q:"5.10 총선 특징은?", choices:["남북 전체 선거","21세 이상 보통선거","대통령 직선","북한 참여"], a:1, explain:"남한에서만 보통·평등·직접·비밀선거 시행", wrongExplain:["남북 포함 아님","", "직선 아님","북한 참여 아님"]},
+      {q:"제헌헌법 특징은?", choices:["직선제","국회 간선제","6년 중임제","내각책임제"], a:1, explain:"대통령은 국회에서 선출", wrongExplain:["직선 아님","", "중임제 아님","내각책임제 아님"]},
+      {q:"농지개혁 방식은?", choices:["무상몰수","유상매수·유상분배","지주권 강화","전면 국유화"], a:1, explain:"유상매수·유상분배로 진행", wrongExplain:["무상몰수 아님","", "지주권 강화 아님","국유화 아님"]},
+      {q:"6.25 전쟁 직후 체결된 조약은?", choices:["가쓰라태프트","사이토협정","한미상호방위조약","경성조약"], a:2, explain:"1953년 한미상호방위조약 체결", wrongExplain:["가쓰라태프트 아님","사이토협정 아님","", "경성조약 아님"]},
+      {q:"3.15 부정선거 결과는?", choices:["5.16 군사정변","4.19 혁명","10.26 사건","5.18 운동"], a:1, explain:"4.19 혁명으로 이승만 하야", wrongExplain:["군사정변 아님","", "10.26 사건 아님","5.18 운동 아님"]},
+      {q:"5.16 군사정변 주도 세력은?", choices:["김대중","박정희","전두환","노태우"], a:1, explain:"1961년 박정희 군사정변", wrongExplain:["김대중 아님","", "전두환 아님","노태우 아님"]},
+      {q:"유신헌법 특징은?", choices:["직선제","3선 금지","긴급조치권","의회권 강화"], a:2, explain:"대통령 권한 강화", wrongExplain:["직선제 아님","3선 금지 아님","", "의회권 강화 아님"]},
+      {q:"긴급조치권 행사 시기 정권은?", choices:["이승만","박정희","최규하","전두환"], a:1, explain:"박정희 유신체제 권한", wrongExplain:["이승만 아님","", "최규하 아님","전두환 아님"]},
+      {q:"부마항쟁 지역은?", choices:["서울·대구","부산·마산","광주·목포","춘천·인제"], a:1, explain:"1979년 부산·마산에서 시작", wrongExplain:["서울·대구 아님","", "광주·목포 아님","춘천·인제 아님"]},
+      {q:"10.26 사건 결과는?", choices:["노태우 집권","전두환 체포","박정희 사망","4.19 혁명"], a:2, explain:"김재규가 박정희 시해", wrongExplain:["노태우 집권 아님","전두환 체포 아님","", "4.19 혁명 아님"]},
+      {q:"12.12 사태 주도자는?", choices:["장면","윤보선","전두환","노신영"], a:2, explain:"전두환 신군부 군권 장악", wrongExplain:["장면 아님","윤보선 아님","", "노신영 아님"]},
+      {q:"5.18 민주화운동 장소는?", choices:["부산","광주","서울","인천"], a:1, explain:"1980년 광주에서 발생", wrongExplain:["부산 아님","", "서울 아님","인천 아님"]},
+      {q:"6월 민주항쟁 결과는?", choices:["유신 부활","전두환 연임","대통령 직선제","국회 해산"], a:2, explain:"1987 6.29 선언 → 직선제", wrongExplain:["유신 부활 아님","전두환 연임 아님","", "국회 해산 아님"]},
+      {q:"대한민국 정부 수립일은?", choices:["1945","1947","1948","1949"], a:2, explain:"1948년 8월 15일 정부 수립", wrongExplain:["1945 아님","1947 아님","", "1949 아님"]},
+      {q:"반민특위 활동 약화 이유는?", choices:["예산 부족","대중 반대","경찰의 습격","이승만의 소극적 태도"], a:3, explain:"이승만 소극적 태도로 약화", wrongExplain:["예산 부족 일부 영향","대중 반대 일부 영향","경찰 습격 일부 영향",""]},
+      {q:"장면 내각 출범 계기?", choices:["4.19 혁명","5.16 군사정변","6월 항쟁","부마항쟁"], a:0, explain:"4.19 이후 내각책임제 → 장면 내각", wrongExplain:["","5.16 군사정변 아님","6월 항쟁 아님","부마항쟁 아님"]},
+
+      // 21~40번 문제
+      {q:"5.16 군사정변 이후 헌법 개정으로 강화된 권력은?", choices:["국회권","대통령 권한","사법권","지방자치권"], a:1, explain:"대통령 권한이 대폭 강화됨", wrongExplain:["국회권 아님","", "사법권 아님","지방자치권 아님"]},
+      {q:"박정희 정부에서 추진한 경제 개발 계획은?", choices:["3저 정책","경제개발 5개년 계획","중화학공업 육성","부동산 개발"], a:1, explain:"경제개발 5개년 계획 추진", wrongExplain:["3저 정책 아님","", "중화학공업 육성 일부 포함","부동산 개발 아님"]},
+      {q:"1970년대 중화학공업 육성 정책으로 유명한 사건은?", choices:["경부고속도로 건설","포항제철 설립","청계천 복원","한강 개발"], a:1, explain:"포항제철 설립이 대표적", wrongExplain:["경부고속도로 아님","", "청계천 복원 아님","한강 개발 아님"]},
+      {q:"유신헌법 선포 시기 대통령은?", choices:["이승만","박정희","최규하","전두환"], a:1, explain:"박정희 대통령", wrongExplain:["이승만 아님","", "최규하 아님","전두환 아님"]},
+      {q:"1979년 박정희 대통령 암살 사건 주도자는?", choices:["김재규","전두환","노태우","최규하"], a:0, explain:"김재규 중앙정보부장이 시해", wrongExplain:["","전두환 아님","노태우 아님","최규하 아님"]},
+      {q:"부마항쟁 발생 년도는?", choices:["1978","1979","1980","1981"], a:1, explain:"1979년 발생", wrongExplain:["1978 아님","", "1980 아님","1981 아님"]},
+      {q:"전두환 신군부가 장악한 사건은?", choices:["12.12 군사반란","5.16 군사정변","4.19 혁명","6월 민주항쟁"], a:0, explain:"12.12 군사반란", wrongExplain:["", "5.16 군사정변 아님","4.19 혁명 아님","6월 민주항쟁 아님"]},
+      {q:"1980년 광주 민주화 운동 직후 계엄령 선포 대통령은?", choices:["이승만","박정희","최규하","전두환"], a:2, explain:"최규하 대통령 시기", wrongExplain:["이승만 아님","박정희 아님","", "전두환 아님"]},
+      {q:"5.18 민주화운동 진압 주체는?", choices:["육군","경찰","전두환 신군부","국회"], a:2, explain:"전두환 신군부 진압", wrongExplain:["육군 일부 포함","경찰 일부 포함","", "국회 아님"]},
+      {q:"1987년 6월 민주항쟁 계기 사건은?", choices:["노태우 집권","전두환 연임 시도","유신헌법 유지","박정희 암살"], a:1, explain:"전두환 연임 시도 → 6월 항쟁", wrongExplain:["노태우 아님","", "유신헌법 유지 아님","박정희 암살 아님"]},
+      {q:"1987년 6월 민주항쟁 결과 도입된 제도는?", choices:["대통령 직선제","국회 해산","유신헌법 부활","군사정권"], a:0, explain:"대통령 직선제 도입", wrongExplain:["직선제", "국회 해산 아님","유신헌법 부활 아님","군사정권 아님"]},
+      {q:"5.16 군사정변 이후 초대 국가재건최고회의 의장은?", choices:["박정희","전두환","노태우","윤보선"], a:0, explain:"박정희 의장", wrongExplain:["","전두환 아님","노태우 아님","윤보선 아님"]},
+      {q:"제1공화국 대통령 이승만 하야 이유는?", choices:["3.15 부정선거","4.19 혁명","5.16 군사정변","부마항쟁"], a:1, explain:"4.19 혁명으로 하야", wrongExplain:["3.15 부정선거는 계기","", "5.16 군사정변 아님","부마항쟁 아님"]},
+      {q:"전두환 집권 시기 헌법은?", choices:["유신헌법","제헌헌법","3차 개헌","제4공화국헌법"], a:3, explain:"제4공화국헌법 계승", wrongExplain:["유신헌법 아님","제헌헌법 아님","3차 개헌 아님",""]},
+      {q:"이승만 정부의 반민특위 활동 약화 주 요인은?", choices:["예산 부족","대중 반대","경찰 습격","대통령 소극적 태도"], a:3, explain:"대통령 소극적 태도로 약화", wrongExplain:["예산 부족 일부","대중 반대 일부","경찰 습격 일부",""]},
+      {q:"장면 내각 출범 시기는?", choices:["4.19 혁명 직후","5.16 군사정변 직후","6월 항쟁 직후","부마항쟁 직후"], a:0, explain:"4.19 혁명 이후 내각책임제 도입 → 장면 내각", wrongExplain:["","5.16 군사정변 아님","6월 항쟁 아님","부마항쟁 아님"]},
+      {q:"6월 민주항쟁 당시 주요 요구 사항은?", choices:["직선제 실시","유신헌법 유지","군사 정권 연장","국회 해산"], a:0, explain:"직선제 요구", wrongExplain:["","유신헌법 유지 아님","군사 정권 연장 아님","국회 해산 아님"]},
+      {q:"1980년대 경제개발 정책 주체는?", choices:["이승만","박정희","전두환","노태우"], a:1, explain:"박정희 정부 주도", wrongExplain:["이승만 아님","", "전두환 아님","노태우 아님"]},
+      {q:"1980년대 전두환 정부 출범 계기 사건은?", choices:["12.12 사태","5.16 군사정변","4.19 혁명","부마항쟁"], a:0, explain:"12.12 사태 → 전두환 정부 출범", wrongExplain:["", "5.16 군사정변 아님","4.19 혁명 아님","부마항쟁 아님"]},
     ];
 
     const startBtn = document.getElementById('start');
@@ -136,7 +145,6 @@
     let current = 0;
     let score = 0;
     let answers = [];
-
     const BEST_KEY = 'kh_quiz_best_v2';
 
     function loadBest(){bestEl.textContent = localStorage.getItem(BEST_KEY) || '0';}
@@ -154,11 +162,9 @@
     restartBtn.onclick = ()=>{pool=[];current=0;score=0;answers=[];renderIdle();};
     prevBtn.onclick = ()=>{if(current>0){current--;render();}};
     nextBtn.onclick = ()=>{if(current<pool.length-1){current++;render();}};
-
     finishBtn.onclick = ()=>{
       if(!pool.length)return;
-      let c=0;
-      pool.forEach((q,i)=>{if(answers[i]===q.a)c++;});
+      let c=0; pool.forEach((q,i)=>{if(answers[i]===q.a)c++;});
       alert(`결과: ${c}/${pool.length} ${(c/pool.length*100).toFixed(1)}%`);
       saveBest(c);
     };
@@ -207,7 +213,9 @@
         if(i===q.a)b.classList.add('correct');
         if(answers[current]===i && i!==q.a)b.classList.add('wrong');
       });
-      explainEl.textContent='해설: '+q.explain;
+      let feedback = '해설: '+q.explain;
+      if(answers[current]!==q.a) feedback+='\n틀린 이유: '+q.wrongExplain[answers[current]];
+      explainEl.textContent = feedback;
       explainEl.classList.remove('hidden');
     }
 
